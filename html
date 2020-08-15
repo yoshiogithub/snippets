@@ -1,0 +1,361 @@
+{
+	"Conexion-PHP":{
+		"prefix": "con-php",
+		"body": [
+			"<?php",
+			"\t $1Hostname='localhost';",
+			"\t $1Username='root';",
+			"\t $1Password='';",
+			"\t $1Database='db_';",
+			"",
+			"\t $1conexion=new mysqli($1Hostname,$1Username,$1Password,$1Database);",
+			"?>"
+		],
+		"description": "Crear una conexion php"		
+	},
+	"PHP":{
+		"prefix": "php(crear)",
+		"body": [
+			"<?php $1?>"
+		],
+		"description": "Crear un php"
+	},
+	
+	"Select-Datos":{
+		"prefix": "seleccionar datos mysql",
+		"body": [
+			"$1query=mysqli_query($1mysqli,'SELECT company FROM proveedor');",
+			"<select name='proveedor'>",
+                "\t<?php while($1datos=mysqli_fetch_array($1query)) ", 
+                	"\t\t{",
+                "\t?>",
+                	"\t\t<option value='<?php echo $1datos['company']?>'><?php echo $1datos['company']?></option>",
+                "\t<?php",
+				"\t\t }",
+                "\t?>",
+            "</select>"
+		],
+		"description": "Selecionar datos de mysql"
+	},
+
+	"Insertar-Tabla":{
+		"prefix": "insertar-tabla",
+		"body": [
+			"<!DOCTYPE html>",
+			"<html>",
+			"<head>",
+				"\t<title>Lista</title>",
+				"\t<link rel='stylesheet' href='css/estilo.css'>",
+				"\t<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap-grid.min.css'>",
+			"</head>",
+			"<body>",
+				"\t<center>",
+					"\t\t<table border='black'>",
+						"\t\t\t<thead>",
+							"\t\t\t\t<td><a href='formulario.php'>INGRESAR</a></td>",
+							"\t\t\t\t<th colspan='3' class='titulo-tabla'>LISTA</th>",
+						"\t\t\t</thead>",
+						"\t\t\t<tbody>",
+							"\t\t\t\t<tr>",
+								"\t\t\t\t\t<td class='tabla-atributos'>DNI</td>",
+								"\t\t\t\t\t<td class='tabla-atributos'>NOMBRE</td>",
+								"\t\t\t\t\t<td class='tabla-atributos'>OCUPACION</td>",
+								"\t\t\t\t\t<td class='tabla-atributos'>DIRECCION</td>",
+								"\t\t\t\t\t<td class='tabla-atributos'>TELEFONO</td>",
+								"\t\t\t\t\t<td class='tabla-atributos' colspan='1'>OPERACION</td>",
+							"\t\t\t\t</tr>",
+							"\t\t\t\t<?php",
+							"\t\t\t\tinclude('conexion.php');",
+								"\t\t\t\t\t$1query='SELECT * FROM tabla';",
+								"\t\t\t\t\t$1resultado=$1conexion->query($1query);",
+								"\t\t\t\t\twhile ($1row=$1resultado->fetch_assoc()){",
+							"\t\t\t\t?>",
+							"\t\t\t\t<tr>",
+								"\t\t\t\t\t<td class='info-atributos'><?php echo $1row['dni'];?></td>",
+								"\t\t\t\t\t<td class='info-atributos'><?php echo strtoupper($1row['nombre'].' '.$1row['apellido']);?></td>",
+								"\t\t\t\t\t<td class='info-atributos'><?php echo strtoupper($1row['ocupacion']);?></td>",
+								"\t\t\t\t\t<td class='info-atributos'><?php echo strtoupper($1row['direccion']);?></td>",
+								"\t\t\t\t\t<td class='info-atributos'><?php echo $1row['telefono'];?></td>",
+								"\t\t\t\t\t<td class='info-atributos'><img width='100px' height='50px' src='data:image/jpg;base64,<?php echo base64_encode($1row['imagen']);?>' alt=''></td>",
+								"\t\t\t\t\t<td class='info-atributos'><a href='eliminar.php?id=<?php echo $1row['id'];?>' >Eliminar</a>",
+											"\t\t\t\t\t\t\t\t\t<a href='modificar.php?id=<?php echo $1row['id'];?>' >Modificar</a></td>",
+							"\t\t\t\t</tr>",
+							"\t\t\t\t<?php",
+							"\t\t\t\t}",
+							"\t\t\t\t?>",
+						"\t\t\t</tbody>",
+					"\t\t</table>",
+				"\t</center>",
+			"</body>",
+			"</html>",
+		],
+		"description": "Crear tabla"
+	},
+
+	"Sumar Entidades":{
+		"prefix": "suma de entidades",
+		"body": [
+			"<?php",
+				"\tinclude('conexion.php');",
+
+				"\t$1query='SELECT* FROM gastos WHERE sitio = 'bodega'';",
+				"\t$1total = 0;",
+				"\t$1resultado=$1conexion->query($1query);",
+				"\twhile ($1row=$1resultado->fetch_assoc())",
+				"\t{",
+				"\t$1total = $1total + $1row['cantidad']; ",
+				"\t}" ,
+			"?>",
+
+			"<table border='black' class='#'>",
+				"\t<tr>",
+					"\t\t<td class='#'><?php echo 'BODEGA ';?></td>",
+					"\t\t<td class='#'><?php echo 'S/. '.round($1total, 2)?></td>",
+				"\t</tr>",
+			"</table>"
+
+		],
+		"description": "Sumar Entidades"
+	},
+	
+	"HTML":{
+		"prefix": "index",
+		"body": [
+			"<!DOCTYPE html>",
+			"<html lang='en'>",
+			"<head>",
+				"\t<meta charset='UTF-8'>",
+				"\t<meta name='viewport' content='width=device-width, initial-scale=1.0'>",
+				"\t<title>$1</title>",
+				"<link rel='stylesheet' href='css/estilo.css'>",
+   				"<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap-grid.min.css'>",
+			"</head>",
+			"<body>",
+				"\t<div class='container'>",
+					"\t\t<h1>$2</h1>",
+					"\t\t<hr>",
+					"\t\t$3",
+				"\t</div>",
+				"\t<script src='js/main.js'></script>",
+			"</body>",
+			"</html>"
+		],
+		"description": "Cuerpo html"
+	},
+
+	"Insertar Imagen":{
+		"prefix": "insertar una imagen",
+		"body": [
+			"<form action='proceso_guardar.php' method='post' enctype='multipart/form-data'>",
+            "\t<input type='file' class='seleccionar' required name='imagen'><br>",
+            "\t<button> Agregar</button>",
+        	"</form>"
+		],
+		"description": "Insertar una imagen"
+	},
+
+	"Proceso insertar una imagen":{
+		"prefix": "proceso insertar una imagen",
+		"body": [
+			"<?php",
+			"\tinclude('conexion.php');",
+			"",
+			"\t$1nombre=$1_POST['nombre'];",
+			"\t$1apellido=$1_POST['apellido'];",
+			"\t$1email=$1_POST['email'];",
+			"\t$1imagen=addslashes(file_get_contents($1_FILES['imagen']['tmp_name']));",
+			"",
+			"\t$1consulta=$2INSERT INTO agenda(nombre,apellido,email,imagen)VALUES('$1nombre','$1apellido','$1email','$1imagen')$2;",
+			"\t$1resultado=$1conexion->query($1consulta);",
+			"\tif($1resultado){",
+				"\t\theader('Location:mostrar.php');",
+			"\t}else{",
+				"\t\techo 'error al guardar';",
+			"\t}",
+			"?>"
+		],
+		"description": "Proceso insertar una imagen"
+	},
+
+	"Eliminar-Datos":{
+		"prefix": "eliminar datos de una tabla",
+		"body": [
+			"<?php",
+				"\tinclude('conexion.php');",
+
+				"\t$1id=$1_REQUEST['id'];",
+
+				"\t$1consulta='DELETE FROM agenda WHERE id='$1id'';",
+				"\t$1resultado=$1conexion->query($1consulta);",
+
+				"\tif($1resultado){",
+					"\t\theader('Location:index.php');",
+				"\t}",
+			"?>"
+		],
+		"description": "Eliminar datos de una tabla"
+	},
+
+	"Modificar-Datos":{
+		"prefix": "modificar datos",
+		"body": [
+			"<!DOCTYPE html>",
+			"<html lang='en'>",
+			"<head>",
+				"\t<meta charset='UTF-8'>",
+				"\t<meta name='viewport' content='width=device-width, initial-scale=1.0'>",
+				"\t<meta http-equiv='X-UA-Compatible' content='ie=edge'>",
+				"\t<title>Modificar</title>",
+				"\t<link rel='stylesheet' href='style.css'>",
+			"</head>",
+			"<body>",
+				"\t<?php",
+					"\t\tinclude('conexion.php');",
+					"",
+					"\t\t$1id=$1_REQUEST['id'];",
+					"",
+					"\t\t$1consulta='SELECT*FROM agenda WHERE id='$1id'';",
+					"\t\t$1resultado=$1conexion->query($1consulta);",
+					"\t\t$1row=$1resultado->fetch_assoc();",
+				"\t?>",
+				"",
+				"\t<center>",
+					"\t\t<h1>Modificar Contacto</h1>",
+					"\t\t<br><hr><br>",
+					"\t\t<form action='proceso_modificar.php?id=<?php echo $1row['id'];?>' method='post' enctype='multipart/form-data'>",
+						"\t\t\t<input type='text' required name='nombre' placeholder='Ingrese el nombre' value='<?php echo $1row['nombre'];?>'><br>",
+						"\t\t\t<input type='text' required name='apellido' placeholder='Ingrese el apellido' value='<?php echo $1row['apellido'];?>'><br>",
+						"\t\t\t<input type='text' required name='email' placeholder='Ingrese el email' value='<?php echo $1row['email'];?>'><br>",
+						"\t\t\t<center><img height='100px' src='data:image/jpg;base64,<?php echo base64_encode($1row['imagen']);?>' alt=''></center>",
+						"\t\t\t<input type='file' class='seleccionar' required name='imagen'><br>",
+						"\t\t\t<button>Agregar</button>",
+					"\t\t</form>",
+					"\t\t<button><a href='index.php'>Salir</a></button>",
+				"\t</center>",
+			"</body>",
+			"</html>"
+		],
+		"description": "Modificar datos"
+	},
+
+	"Proceso-Modificar":{
+		"prefix": "proceso modificar datos",
+		"body": [
+			"<?php",
+				"\tinclude('conexion.php');",
+				"",
+				"\t$1id=$1_REQUEST['id'];",
+				"",
+				"\t$1nombre=$1_POST['nombre'];",
+				"\t$1apellido=$1_POST['apellido'];",
+				"\t$1email=$1_POST['email'];",
+				"\t$1imagen=addslashes(file_get_contents($1_FILES['imagen']['tmp_name']));",
+				"",
+				"\t$1consulta='UPDATE agenda SET nombre='$1nombre', apellido='$1apellido', email='$1email', imagen='$1imagen' WHERE id='$1id'';",
+				"\t$1resultado=$1conexion->query($1consulta);",
+				"\tif($1resultado){",
+					"\t\theader('Location:index.php');",
+				"\t}",
+			"?>"
+		],
+		"description": "Proceso modificar datos"
+	},
+
+	"Buscador":{
+		"prefix": "buscador de datos",
+		"body": [
+			"<?php",
+				"\tinclude('conexion.php');",
+				"\t$1buscar=strtoupper($1_POST['buscar']);",
+				"",
+				"\t$1query='SELECT* FROM producto WHERE nombreProducto = '$1buscar'';",
+				"\t$1total = 0;",
+				"\t$1resultado=$1conexion->query($1query);",
+				"\twhile ($1row=$1resultado->fetch_assoc())",
+				"\t{",
+				"\t$1total = $1total + $1row['unidad']; ",
+				"\t}",
+			"?>",
+			"<?php",
+				"\tif($1total===0){",
+					"\t\theader('location:anuncio.html');",
+				"\t}else{",
+				"",
+				"\t}",
+			"?>",
+			"<table border='black' class='#'>",
+				"\t<tr>",
+				"\t<td class='#'><?php echo 'MANZANA VERDE : ';?></td>",
+					"\t\t<td class='#'><?php echo round($1total, 2)?></td>",
+				"\t</tr>",
+			"</table>",
+		],
+		"description": "Buscador de datos"
+	},
+
+	"Include":{
+		"prefix": "include-php",
+		"body": "<?php include('$1')?>",
+		"description": "Crear un include php"
+	},
+	
+	"Formulario 'POST'":{
+		"prefix": "crear formulario-POST",
+		"body": [
+			"<!DOCTYPE html>",
+			"<html lang='en'>",
+			"<head>",
+				"\t<meta charset='UTF-8'>",
+				"\t<meta name='viewport' content='width=device-width, initial-scale=1.0'>",
+				"\t<title>$1</title>",
+				"\t<link rel='stylesheet' href='css/estilo.css'>",
+				"\t<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap-grid.min.css'>",
+			"</head>",
+			"<body>",
+				"\t<h1>$2</h1>",
+				"\t<hr>",
+				"\t<form action='' method='post' enctype='multipart/form-data'>",
+					"\t\t<input type='text' required name='dni' placeholder='Ingrese el Dni'><br>",
+					"\t\t<input type='text' required name='nombre' placeholder='Ingrese el nombre'><br>",
+					"\t\t<input type='text' required name='apellido' placeholder='Ingresar el apellido'><br>",
+					"\t\t<input type='text' required name='ocupacion' placeholder='Ingrese la ocupacion'><br>",
+					"\t\t<input type='text' required name='direccion' placeholder='Ingrese la direccion'><br>",
+					"\t\t<input type='number' required name='telefono' placeholder='Telefono'><br>",
+					"\t\t<input type='file' class='imagen' required name='imagen'><br>",
+					"\t\t<button class='btnAgregar'>AGREGAR</button>",
+				"\t</form> "   ,
+			"</body>",
+			"</html>"
+		],
+		"description": "Crear formulario POST"
+	},
+
+	"Proceso insertar datos":{
+		"prefix": "proceso insertar datos",
+		"body": [
+			"<?php",
+				"\tinclude('conexion.php');",
+				"",
+				"\t$1dni=$1_POST['dni'];",
+				"\t$1nombre=strtoupper($1_POST['nombre']);",
+				"\t$1apellido=strtoupper($1_POST['apellido']);",
+				"\t$1ocupacion=strtoupper($1_POST['ocupacion']);",
+				"\t$1direccion=strtoupper($1_POST['direccion']);",
+				"\t$1telefono=$1_POST['telefono'];",
+				"\t$1imagen=addslashes(file_get_contents($1_FILES['imagen']['tmp_name']));",
+				"",
+				"\t$1consulta='INSERT INTO empleado(dni,nombre,apellido,ocupacion,direccion,telefono,imagen)",
+							"\t\t\t\tVALUES('$1dni','$1nombre','$1apellido','$1ocupacion','$1direccion','$1telefono','$1imagen')';",
+				"\t$1resultado=$1conexion->query($1consulta);",
+				"\tif($1resultado){",
+					"\t\theader('Location:index.php');",
+				"\t}else{",
+					"\t\techo 'error al guardar';",
+				"\t}",
+			"?>"
+		],
+		"description": "Proceso insertar datos"
+	},
+
+	
+}
