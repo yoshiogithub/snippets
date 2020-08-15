@@ -1,0 +1,19 @@
+{
+	"Imagen de fondo":{
+		"prefix": "fondo-imagen",
+		"body": [
+			"$1{",
+				"\tbackground: url($2) no-repeat fixed center;",
+			   	"\t-webkit-background-size: cover;",
+			   	"\t-moz-background-size: cover;",
+			   	"\t-o-background-size: cover;",
+			   	"\tbackground-size: cover;",
+			   	"\theight: 100%;",
+			   	"\twidth: 100% ;",
+			"}"
+		],
+		"description": "Agregar fondo de imagen"
+	},
+
+
+}
